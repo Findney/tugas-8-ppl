@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">
+    {% if form.instance.pk %}Edit Produk{% else %}Tambah Produk{% endif %}
+  </h2>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+        <div class="mt-1">
+          {{ field }}
+        </div>
+        {% if field.errors %}
+          <p class="text-red-500 text-sm">{{ field.errors }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    
+    <div class="flex items-center space-x-4 pt-4">
+      <button type="submit" 
+              class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-150">
+        Simpan
+      </button>
+      <a href="{% url 'product_list' %}" 
+         class="text-gray-600 hover:text-gray-800 transition duration-150">
+        Batal
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}
